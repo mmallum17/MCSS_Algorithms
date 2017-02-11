@@ -31,6 +31,6 @@ public class maxSumTest
 
         // Create instance and call algorithms
         ms = new maxSum();
-        System.out.printf("Max Value: %d", ms.maxSubSum2(randomNumbers));
+        ms.maxSubSum2(randomNumbers);
     }
 }
