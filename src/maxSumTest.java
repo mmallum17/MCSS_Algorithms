@@ -33,6 +33,6 @@ public class maxSumTest
         ms = new maxSum();
         ms.maxSubSum2(randomNumbers);
         ms.maxSubSum3(randomNumbers);
-        System.out.printf("Max Value: %d", ms.maxSubSum4(randomNumbers));
+        ms.maxSubSum4(randomNumbers);
     }
 }

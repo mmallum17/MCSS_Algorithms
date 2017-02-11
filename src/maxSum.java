@@ -10,8 +10,8 @@ public class maxSum
     public int maxSubSum2(int[] a)
     {
         int maxSum = 0;
-        int start_index = 0;
-        int end_index = 0;
+        int startIndex = 0;
+        int endIndex = 0;
         long startTime = System.nanoTime();
 
         for(int i = 0; i < a.length; i++)
@@ -24,14 +24,14 @@ public class maxSum
                 if(thisSum > maxSum)
                 {
                     maxSum = thisSum;
-                    start_index = i;
-                    end_index = j;
+                    startIndex = i;
+                    endIndex = j;
                 }
             }
         }
         long timeElapsed = System.nanoTime() - startTime;
 
-        System.out.printf("Max Sum: %d, S_index: %d, E_index: %d\n", maxSum, start_index, end_index);
+        System.out.printf("Max Sum: %d, S_index: %d, E_index: %d\n", maxSum, startIndex, endIndex);
         System.out.printf("Execution Time: %d nanoseconds\n", timeElapsed);
         return maxSum;
     }
@@ -93,6 +93,10 @@ public class maxSum
     {
         int maxSum = 0;
         int thisSum = 0;
+        int startIndex = 0;
+        int possibleStartIndex = 0;
+        int endIndex = 0;
+        long startTime = System.nanoTime();
 
         for(int j = 0; j < a.length; j++)
         {
@@ -100,13 +104,20 @@ public class maxSum
 
             if(thisSum > maxSum)
             {
+                endIndex = j;
+                startIndex = possibleStartIndex;
                 maxSum = thisSum;
             }
             else if(thisSum < 0)
             {
+                possibleStartIndex = j + 1;
                 thisSum = 0;
             }
         }
+        long timeElapsed = System.nanoTime() - startTime;
+
+        System.out.printf("Max Sum: %d, S_index: %d, E_index: %d\n", maxSum, startIndex, endIndex);
+        System.out.printf("Execution Time: %d nanoseconds\n", timeElapsed);
 
         return maxSum;
     }
