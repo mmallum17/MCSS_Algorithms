@@ -10,6 +10,8 @@ public class maxSumTest
     {
         int size = 0;
         int randomNumbers[];
+        int maxSum = 0;
+        maxSum ms;
         Random random = new Random();
         Scanner input = new Scanner(System.in);
 
@@ -26,5 +28,9 @@ public class maxSumTest
                 System.out.printf("%d\n", randomNumbers[i]);
             }
         }
+
+        // Create instance and call algorithms
+        ms = new maxSum();
+        System.out.printf("Max Value: %d", ms.maxSubSum2(randomNumbers));
     }
 }
