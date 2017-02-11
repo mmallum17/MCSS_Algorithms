@@ -3,7 +3,7 @@
  */
 public class maxSum
 {
-    public static void main (String args[])
+    public maxSum()
     {
 
     }
