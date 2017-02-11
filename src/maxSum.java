@@ -12,7 +12,7 @@ public class maxSum
         int maxSum = 0;
         int start_index = 0;
         int end_index = 0;
-        long start_time = System.nanoTime();
+        long startTime = System.nanoTime();
 
         for(int i = 0; i < a.length; i++)
         {
@@ -29,7 +29,7 @@ public class maxSum
                 }
             }
         }
-        long timeElapsed = System.nanoTime() - start_time;
+        long timeElapsed = System.nanoTime() - startTime;
 
         System.out.printf("Max Sum: %d, S_index: %d, E_index: %d\n", maxSum, start_index, end_index);
         System.out.printf("Execution Time: %d nanoseconds\n", timeElapsed);
@@ -38,7 +38,12 @@ public class maxSum
 
     public int maxSubSum3(int[] a)
     {
-        return maxSumRec(a, 0, a.length - 1);
+        long startTime = System.nanoTime();
+        int maxSum = maxSumRec(a, 0, a.length - 1);
+        long timeElapsed = System.nanoTime() - startTime;
+        System.out.printf("Max Sum: %d\n", maxSum);
+        System.out.printf("Execution Time: %d nanoseconds\n", timeElapsed);
+        return maxSum;
     }
 
     private int maxSumRec(int[] a, int left, int right)
@@ -82,5 +87,27 @@ public class maxSum
         }
 
         return Math.max(maxLeftSum, Math.max(maxRightSum, maxLeftBorderSum + maxRightBorderSum));
+    }
+
+    public int maxSubSum4(int[] a)
+    {
+        int maxSum = 0;
+        int thisSum = 0;
+
+        for(int j = 0; j < a.length; j++)
+        {
+            thisSum += a[j];
+
+            if(thisSum > maxSum)
+            {
+                maxSum = thisSum;
+            }
+            else if(thisSum < 0)
+            {
+                thisSum = 0;
+            }
+        }
+
+        return maxSum;
     }
 }
