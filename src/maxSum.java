@@ -35,4 +35,52 @@ public class maxSum
         System.out.printf("Execution Time: %d nanoseconds\n", timeElapsed);
         return maxSum;
     }
+
+    public int maxSubSum3(int[] a)
+    {
+        return maxSumRec(a, 0, a.length - 1);
+    }
+
+    private int maxSumRec(int[] a, int left, int right)
+    {
+        if(left == right)
+        {
+            if(a[left] > 0)
+            {
+                return a[left];
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        int center = (left + right) / 2;
+        int maxLeftSum = maxSumRec(a, left, center);
+        int maxRightSum = maxSumRec(a, center + 1, right);
+
+        int maxLeftBorderSum = 0;
+        int leftBorderSum = 0;
+        for(int i = center; i >= left; i--)
+        {
+            leftBorderSum += a[i];
+            if(leftBorderSum > maxLeftBorderSum)
+            {
+                maxLeftBorderSum = leftBorderSum;
+            }
+        }
+
+        int maxRightBorderSum = 0;
+        int rightBorderSum = 0;
+        for(int i = center +1; i <= right; i++)
+        {
+            rightBorderSum += a[i];
+            if(rightBorderSum > maxRightBorderSum)
+            {
+                maxRightBorderSum = rightBorderSum;
+            }
+        }
+
+        return Math.max(maxLeftSum, Math.max(maxRightSum, maxLeftBorderSum + maxRightBorderSum));
+    }
 }
