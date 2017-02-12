@@ -3,8 +3,14 @@
  */
 public class maxSum
 {
+    private int startIndex;
+    private int endIndex;
+    private int maxSum;
     public maxSum()
     {
+        startIndex = 0;
+        endIndex = 0;
+        maxSum = 0;
     }
 
     public int maxSubSum2(int[] a)
@@ -41,13 +47,15 @@ public class maxSum
         long startTime = System.nanoTime();
         int maxSum = maxSumRec(a, 0, a.length - 1);
         long timeElapsed = System.nanoTime() - startTime;
-        System.out.printf("Max Sum: %d\n", maxSum);
+        System.out.printf("Max Sum: %d, S_index: %d, E_index: %d\n", maxSum, startIndex, endIndex);
         System.out.printf("Execution Time: %d nanoseconds\n", timeElapsed);
         return maxSum;
     }
 
     private int maxSumRec(int[] a, int left, int right)
     {
+        int leftStartIndex;
+        int rightEndIndex;
         if(left == right)
         {
             if(a[left] > 0)
@@ -66,27 +74,50 @@ public class maxSum
 
         int maxLeftBorderSum = 0;
         int leftBorderSum = 0;
+        leftStartIndex = center;
         for(int i = center; i >= left; i--)
         {
             leftBorderSum += a[i];
             if(leftBorderSum > maxLeftBorderSum)
             {
                 maxLeftBorderSum = leftBorderSum;
+                leftStartIndex = i;
             }
+        }
+        if(a[leftStartIndex] < 0)
+        {
+            leftStartIndex = center + 1;
         }
 
         int maxRightBorderSum = 0;
         int rightBorderSum = 0;
-        for(int i = center +1; i <= right; i++)
+        rightEndIndex = center + 1;
+        for(int i = center + 1; i <= right; i++)
         {
             rightBorderSum += a[i];
             if(rightBorderSum > maxRightBorderSum)
             {
                 maxRightBorderSum = rightBorderSum;
+                rightEndIndex = i;
+            }
+        }
+        if(a[rightEndIndex] < 0)
+        {
+            rightEndIndex = center;
+        }
+
+        int maxSum = Math.max(maxLeftSum, Math.max(maxRightSum, maxLeftBorderSum + maxRightBorderSum));
+        if(maxSum > this.maxSum)
+        {
+            this.maxSum = maxSum;
+            if (maxLeftBorderSum + maxRightBorderSum == maxSum)
+            {
+                    startIndex = leftStartIndex;
+                    endIndex = rightEndIndex;
             }
         }
 
-        return Math.max(maxLeftSum, Math.max(maxRightSum, maxLeftBorderSum + maxRightBorderSum));
+        return maxSum;
     }
 
     public int maxSubSum4(int[] a)
