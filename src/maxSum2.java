@@ -1,10 +1,16 @@
 /**
  * Created by Marcus on 2/10/2017.
  */
-public class maxSum
+public class maxSum2
 {
-    public maxSum()
+    private int startIndex;
+    private int endIndex;
+    private int maxSum;
+    public maxSum2()
     {
+        startIndex = 0;
+        endIndex = 0;
+        maxSum = 0;
     }
 
     public int maxSubSum2(int[] a)
@@ -39,33 +45,32 @@ public class maxSum
     public int maxSubSum3(int[] a)
     {
         long startTime = System.nanoTime();
-        int[] maxSumValues = new int[3];
-        maxSumValues = maxSumRec(a, 0, a.length - 1, maxSumValues);
+        int maxSum = maxSumRec(a, 0, a.length - 1);
         long timeElapsed = System.nanoTime() - startTime;
-        System.out.printf("Max Sum: %d, S_index: %d, E_index: %d\n", maxSumValues[0], maxSumValues[1], maxSumValues[2]);
-        System.out.printf("Execution Time: %d nanoseconds\n\n", timeElapsed);
-        return maxSumValues[0];
+        System.out.printf("Max Sum: %d, S_index: %d, E_index: %d\n", maxSum, startIndex, endIndex);
+        System.out.printf("Execution Time: %d nanoseconds\n", timeElapsed);
+        return maxSum;
     }
 
-    private int[] maxSumRec(int[] a, int left, int right, int[] maxSumValues)
+    private int maxSumRec(int[] a, int left, int right)
     {
-        int globalMaxSum = 0;
-        int startIndex = 1;
-        int endIndex = 2;
         int leftStartIndex;
         int rightEndIndex;
         if(left == right)
         {
-            if(a[left] > 0 && a.length == 1)
+            if(a[left] > 0)
             {
-                maxSumValues[globalMaxSum] = a[left];
+                return a[left];
             }
-            return maxSumValues;
+            else
+            {
+                return 0;
+            }
         }
 
         int center = (left + right) / 2;
-        int[] maxLeftSum = maxSumRec(a, left, center, maxSumValues);
-        int[] maxRightSum = maxSumRec(a, center + 1, right, maxLeftSum);
+        int maxLeftSum = maxSumRec(a, left, center);
+        int maxRightSum = maxSumRec(a, center + 1, right);
 
         int maxLeftBorderSum = 0;
         int leftBorderSum = 0;
@@ -101,18 +106,18 @@ public class maxSum
             rightEndIndex = center;
         }
 
-        int maxSum = Math.max(maxLeftSum[globalMaxSum], Math.max(maxRightSum[globalMaxSum], maxLeftBorderSum + maxRightBorderSum));
-        if(maxSum > maxSumValues[globalMaxSum])
+        int maxSum = Math.max(maxLeftSum, Math.max(maxRightSum, maxLeftBorderSum + maxRightBorderSum));
+        if(maxSum > this.maxSum)
         {
-            maxSumValues[globalMaxSum] = maxSum;
+            this.maxSum = maxSum;
             if (maxLeftBorderSum + maxRightBorderSum == maxSum)
             {
-                maxSumValues[startIndex] = leftStartIndex;
-                maxSumValues[endIndex] = rightEndIndex;
+                    startIndex = leftStartIndex;
+                    endIndex = rightEndIndex;
             }
         }
 
-        return maxSumValues;
+        return maxSum;
     }
 
     public int maxSubSum4(int[] a)
@@ -148,3 +153,4 @@ public class maxSum
         return maxSum;
     }
 }
+
